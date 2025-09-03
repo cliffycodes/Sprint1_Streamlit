@@ -13,9 +13,9 @@ data_dir = "data"
 image_dir = "images"
 plot_dir = "plots"
 
-if menu =="Overall" : 
+if menu =="Test 1" : 
     st.title("Overall Summary")
     st.write("This is an overview of the project")
 
-    overall_image_path = os.path.join(image_dir,"image.png")
+    overall_image_path = os.path.join(image_dir,"test_screenshot.png")
     st.image(overall_image_path,caption="Mochi",use_column_width=True)
