@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 st.set_page_config(page_title="My first streamlit project",layout="wide")
 
