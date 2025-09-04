@@ -7,15 +7,14 @@ st.set_page_config(page_title="My first streamlit project",layout="wide")
 
 # Sidebar
 st.sidebar.title("Navigation")
-menu = st.sidebar.radio("What page should i open",["Test 1","Test 2"])
+menu = st.sidebar.radio("What page should i open",["Overview","Segment 1","Segment 2","Segment 3"])
 
 data_dir = "data"
 image_dir = "images"
 plot_dir = "plots"
 
 if menu =="Test 1" : 
-    st.title("Overall Summary")
-    st.write("This is an overview of the project")
-
+    st.markdown("# Title")
+    st.markdown("## Introduction")
     overall_image_path = os.path.join(image_dir,"test_screenshot.png")
     st.image(overall_image_path,caption="Mochi",use_column_width=True)
