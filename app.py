@@ -16,5 +16,7 @@ plot_dir = "plots"
 if menu =="Overview" : 
     st.markdown("# Title")
     st.markdown("## Introduction")
+    st.markdown("## Customer Segmentation")
+    st.markdown("## Proof of Concept")
     overall_image_path = os.path.join(image_dir,"test_screenshot.png")
     st.image(overall_image_path,caption="Mochi",use_column_width=True)
