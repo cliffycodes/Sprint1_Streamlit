@@ -40,11 +40,12 @@ image_dir = "images"
 plot_dir = "plots"
 
 if menu == "Overview": 
-    st.markdown("# Premise")
+    st.markdown("## Premise")
     st.markdown("## Introduction")
     
-    st.markdown("### Here's a sample of the original table")
+    st.markdown("### Original Dataset")
     st.dataframe(df.head(20))
+
 
     # Download button for merged dataset
     csv = df1.to_csv(index=False).encode('utf-8')
@@ -54,6 +55,10 @@ if menu == "Overview":
         file_name="cleaned_transactions.csv",
         mime="text/csv",
     )
+
+    st.markdown("### Data Preprocessign Pipeline")
+    overall_image_path = os.path.join(image_dir, "preprocessing.png")
+    st.image(overall_image_path, caption="", use_column_width=True)
 
     st.markdown("## Customer Segmentation")
     st.markdown("## Proof of Concept")
