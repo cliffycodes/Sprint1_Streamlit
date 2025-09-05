@@ -5,8 +5,8 @@ import os
 
 
 # Import main df
-df = pd.read_csv(rf"C:\Users\221947\OneDrive - Security Bank Corporation\Desktop\Cliffy_Environment\Practiz\cc_clean.csv")
-final_account_labels = pd.read_csv(rf"final_acct_table.csv")
+df = pd.read_csv(rf"data/cc_clean.csv")
+final_account_labels = pd.read_csv(rf"data/final_acct_table.csv")
 
 # Join tables w/ account labels
 df1 = pd.merge(df,final_account_labels,on='acct_num2',how='left')
