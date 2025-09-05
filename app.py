@@ -70,7 +70,7 @@ if menu == "Overview":
     overall_image_path = os.path.join(image_dir, "eda highlights 1.png")
     st.image(overall_image_path, caption="", use_container_width=True)
 
-     overall_image_path = os.path.join(image_dir, "eda highlights 2.png")
+    overall_image_path = os.path.join(image_dir, "eda highlights 2.png")
     st.image(overall_image_path, caption="", use_container_width=True)
 
     st.markdown("### Features")
