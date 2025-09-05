@@ -50,11 +50,12 @@ if menu == "Overview":
     st.image(overall_image_path, caption="", use_container_width=True)
 
     st.markdown("### Original Dataset")
+    st.markdown("The dataset from Adobo Bank includes transactions of its cardholders from 2020-2021")
     st.dataframe(df.head(20))
 
 
     # Download button for merged dataset
-    csv = df1.to_csv(index=False).encode('utf-8')
+    csv = df.to_csv(index=False).encode('utf-8')
     st.download_button(
         label="📥 Download Cleaned Dataset (CSV)",
         data=csv,
@@ -77,6 +78,19 @@ if menu == "Overview":
     st.markdown("To capture these patterns, we engineered three groups of features")
     overall_image_path = os.path.join(image_dir, "features.png")
     st.image(overall_image_path, caption="", use_container_width=True)
+
+    st.markdown("### Final Table")
+    st.markdown("Final features attached to each accountnumber to be used in clustering")
+    st.dataframe(df1.head(20))
+
+        # Download button for merged dataset
+    csv2 = df1.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Download Cleaned Dataset (CSV)",
+        data=csv2,
+        file_name="cleaned_transactions.csv",
+        mime="text/csv",
+    )
 
     st.markdown("### Method & Validation (K-Means)")
     st.markdown("We used K-Means clustering, after scaling the features so that all variables carried equal weight. To determine the optimal number of clusters, we ran elbow and silhouette tests — both pointed to three as the best balance.This gave us three distinct clusters of customers, which we can now profile in detail")
