@@ -33,7 +33,7 @@ st.set_page_config(page_title="My first streamlit project",layout="wide")
 
 # Sidebar
 st.sidebar.title("Sprint 1 Project")
-menu = st.sidebar.radio("",["Overview","Segment 1","Segment 2","Segment 3"])
+menu = st.sidebar.radio("",["Overview","Resilient Essentials","Rebound Discretionary","Dormant Big-Ticket"])
 
 data_dir = "data"
 image_dir = "images"
@@ -41,8 +41,14 @@ plot_dir = "plots"
 
 if menu == "Overview": 
     st.markdown("## Premise")
-    st.markdown("## Introduction")
+    st.markdown("Our project is based on Adobo Bank’s credit card transaction data from 2020 to 2021 — the height of the pandemic. The challenge we set out to solve is simple but important: How can we segment customers into meaningful groups, so the bank can tailor its acquisition, retention, and campaign strategies?")
     
+
+    st.markdown("## Hypothesis")
+    st.markdown("we hypothesize that customers exhibit two broad behaviors: Resilient Essentials — those who stayed focused on necessities, and Rebound Discretionary — those who bounced back to non-essential categories.")
+    overall_image_path = os.path.join(image_dir, "hypothesis.png")
+    st.image(overall_image_path, caption="", use_container_width=True)
+
     st.markdown("### Original Dataset")
     st.dataframe(df.head(20))
 
@@ -58,9 +64,7 @@ if menu == "Overview":
 
     st.markdown("### Data Preprocessign Pipeline")
     overall_image_path = os.path.join(image_dir, "preprocessing.png")
-    st.image(overall_image_path, caption="", use_column_width=True)
+    st.image(overall_image_path, caption="", use_container_width=True)
 
     st.markdown("## Customer Segmentation")
     st.markdown("## Proof of Concept")
-    overall_image_path = os.path.join(image_dir, "test_screenshot.png")
-    st.image(overall_image_path, caption="Mochi", use_column_width=True)
