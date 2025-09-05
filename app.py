@@ -77,4 +77,8 @@ if menu == "Overview":
     st.markdown("To capture these patterns, we engineered three groups of features")
     overall_image_path = os.path.join(image_dir, "features.png")
     st.image(overall_image_path, caption="", use_container_width=True)
-    st.markdown("## Proof of Concept")
+
+    st.markdown("### Method & Validation (K-Means)")
+    st.markdown("We used K-Means clustering, after scaling the features so that all variables carried equal weight. To determine the optimal number of clusters, we ran elbow and silhouette tests — both pointed to three as the best balance.This gave us three distinct clusters of customers, which we can now profile in detail")
+    overall_image_path = os.path.join(image_dir, "k-means.png")
+    st.image(overall_image_path, caption="Optimal k = 3 clusters", use_container_width=True)
