@@ -8,8 +8,14 @@ import os
 df = pd.read_csv(rf"data/cc_clean.csv")
 final_account_labels = pd.read_csv(rf"data/final_acct_table.csv")
 
-# Join tables w/ account labels
-df1 = pd.merge(df,final_account_labels,on='acct_num2',how='left')
+# Figure out which columns to bring from final_account_labels
+# Always keep acct_num2 (join key)
+cols_to_add = [c for c in final_account_labels.columns if c not in df.columns or c == "acct_num2"]
+
+# Merge cleanly
+df1 = df.merge(final_account_labels[cols_to_add], on="acct_num2", how="left")
+
+
 # Convert and add columns
 
 df1['trans_datetime'] = pd.to_datetime(df1['trans_datetime'])
@@ -18,7 +24,7 @@ df1['YEAR'] = df1['trans_datetime'].dt.to_period('Y')
 df1['category'] = df1['category'].fillna('Unknown')
 
 # Drop duplicate txns potentially from joins
-df1 = df1.drop_duplicates(subset=[''])
+df1 = df1.drop_duplicates(subset=['trans_num'])
 
 
 
