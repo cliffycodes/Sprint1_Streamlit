@@ -32,7 +32,7 @@ df1 = df1.drop_duplicates(subset=['trans_num'])
 st.set_page_config(page_title="My first streamlit project",layout="wide")
 
 # Sidebar
-st.sidebar.title("Sprint 1 Project")
+st.sidebar.title("Resilient VS Rebound")
 menu = st.sidebar.radio("",["Overview","Resilient Essentials","Rebound Discretionary","Dormant Big-Ticket"])
 
 data_dir = "data"
