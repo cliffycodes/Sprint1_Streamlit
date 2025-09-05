@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 
+
 # Import main df
 df = pd.read_csv(rf"data/cc_clean.csv")
 final_account_labels = pd.read_csv(rf"data/final_acct_table.csv")
@@ -38,15 +39,23 @@ data_dir = "data"
 image_dir = "images"
 plot_dir = "plots"
 
-if menu =="Overview" : 
+if menu == "Overview": 
     st.markdown("# Premise")
     st.markdown("## Introduction")
     
-    # Original table
-    st.markdown("### Here's the original table")
-    st.table(df)
+    st.markdown("### Here's a sample of the original table")
+    st.dataframe(df.head(20))
+
+    # Download button for merged dataset
+    csv = df1.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Download Cleaned Dataset (CSV)",
+        data=csv,
+        file_name="cleaned_transactions.csv",
+        mime="text/csv",
+    )
 
     st.markdown("## Customer Segmentation")
     st.markdown("## Proof of Concept")
-    overall_image_path = os.path.join(image_dir,"test_screenshot.png")
-    st.image(overall_image_path,caption="Mochi",use_column_width=True)
+    overall_image_path = os.path.join(image_dir, "test_screenshot.png")
+    st.image(overall_image_path, caption="Mochi", use_column_width=True)
