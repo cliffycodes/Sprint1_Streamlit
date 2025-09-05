@@ -105,7 +105,7 @@ if menu == "Overview":
     st.markdown("The Transactions per Active Month chart shows how frequently each group spends. Cluster 1 stands out as very active, with the highest transaction counts, while Cluster 2 transacts only rarely.Looking at the Average Monthly Spend chart in the middle, we see that Cluster 1 also leads in total spend, Cluster 0 maintains moderate steady spend, and Cluster 2 spends less frequently but still at substantial levels.Now, on the right, the Median Transaction Amount chart highlights what makes Cluster 2 unique — when they do spend, they make very large-ticket purchases compared to the smaller, steadier amounts of Clusters 0 and Cluster 1")
     overall_image_path = os.path.join(image_dir, "rfm cluster behavior.png")
     st.image(overall_image_path, caption="", use_container_width=True)
-    
+
     st.markdown("#### Category Comparison")
     st.markdown("The Spending Mix by Cluster chart ties this all together. Cluster 0 keeps a balanced mix of categories, Cluster 1 allocates more toward shopping and travel, and Cluster 2 concentrates their spend heavily in shopping and miscellaneous categories.So overall: Cluster 0 are steady, balanced spenders, Cluster 1 are affluent, high-frequency shoppers, and Cluster 2 are infrequent but high-ticket spenders.With these results, let’s translate the clusters into clear business-friendly personas — and tie them back to our Resilient vs Rebound framing")
     overall_image_path = os.path.join(image_dir, "cluster category.png")
@@ -114,7 +114,7 @@ if menu == "Overview":
     st.image(overall_image_path, caption="", use_container_width=True)
 
     st.markdown("## Personas")
-    st.markdown("")
+    st.markdown("These clusters map back to our Resilient vs Rebound framing. Cluster 0, the Older Urban Steady Spenders, represent Resilient Essentials — cautious, consistent customers who stuck with groceries and daily needs. Cluster 1, Affluent Older Shoppers, are our Rebound Discretionary — bouncing back strongly in shopping and travel. Cluster 2 are Dormant Big-Ticket Shoppers — low activity overall, but with big purchases when they spend.With these personas in hand, we can now connect them to concrete marketing strategies tailored to stability on one side, and growth on the other. ")
     overall_image_path = os.path.join(image_dir, "personas.png")
     st.image(overall_image_path, caption="", use_container_width=True)
 
