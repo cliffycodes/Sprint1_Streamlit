@@ -44,7 +44,7 @@ if menu == "Overview":
     st.markdown("Our project is based on Adobo Bank’s credit card transaction data from 2020 to 2021 — the height of the pandemic. The challenge we set out to solve is simple but important: How can we segment customers into meaningful groups, so the bank can tailor its acquisition, retention, and campaign strategies?")
     
 
-    st.markdown("## Hypothesis")
+    st.markdown("## Hypothesis: Two Broad Behaviors")
     st.markdown("we hypothesize that customers exhibit two broad behaviors: Resilient Essentials — those who stayed focused on necessities, and Rebound Discretionary — those who bounced back to non-essential categories.")
     overall_image_path = os.path.join(image_dir, "hypothesis.png")
     st.image(overall_image_path, caption="", use_container_width=True)
@@ -62,9 +62,19 @@ if menu == "Overview":
         mime="text/csv",
     )
 
-    st.markdown("### Data Preprocessign Pipeline")
+    st.markdown("### Data Preprocessing Pipeline")
     overall_image_path = os.path.join(image_dir, "preprocessing.png")
     st.image(overall_image_path, caption="", use_container_width=True)
 
-    st.markdown("## Customer Segmentation")
+    st.markdown("## EDA")
+    overall_image_path = os.path.join(image_dir, "eda highlights 1.png")
+    st.image(overall_image_path, caption="", use_container_width=True)
+
+     overall_image_path = os.path.join(image_dir, "eda highlights 2.png")
+    st.image(overall_image_path, caption="", use_container_width=True)
+
+    st.markdown("### Features")
+    st.markdown("To capture these patterns, we engineered three groups of features")
+    overall_image_path = os.path.join(image_dir, "features.png")
+    st.image(overall_image_path, caption="", use_container_width=True)
     st.markdown("## Proof of Concept")
