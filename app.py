@@ -98,7 +98,7 @@ if menu == "Overview":
     st.markdown("We used K-Means clustering, after scaling the features so that all variables carried equal weight. To determine the optimal number of clusters, we ran elbow and silhouette tests — both pointed to three as the best balance.This gave us three distinct clusters of customers, which we can now profile in detail")
     overall_image_path = os.path.join(image_dir, "k-means.png")
 
-    st.markdown("### Cluster Behaviors")
-    st.markdown("## Recency,Frequency and Monetary Comparison")
+    st.markdown("## Cluster Behaviors")
+    st.markdown("### Recency,Frequency and Monetary Comparison")
     st.markdown("As you can see on the left, the Transactions per Active Month chart shows how frequently each group spends. Cluster 1 stands out as very active, with the highest transaction counts, while Cluster 2 transacts only rarely.Looking at the Average Monthly Spend chart in the middle, we see that Cluster 1 also leads in total spend, Cluster 0 maintains moderate steady spend, and Cluster 2 spends less frequently but still at substantial levels.Now, on the right, the Median Transaction Amount chart highlights what makes Cluster 2 unique — when they do spend, they make very large-ticket purchases compared to the smaller, steadier amounts of Clusters 0 and Cluster 1")
     overall_image_path = os.path.join(image_dir, "rfm_cluster_behavior.png")
