@@ -61,6 +61,7 @@ if menu == "Overview":
         data=csv,
         file_name="cleaned_transactions.csv",
         mime="text/csv",
+        key="download_cleaned"
     )
 
     st.markdown("### Data Preprocessing Pipeline")
@@ -88,8 +89,9 @@ if menu == "Overview":
     st.download_button(
         label="📥 Download Cleaned Dataset (CSV)",
         data=csv2,
-        file_name="cleaned_transactions.csv",
+        file_name="final_table.csv",
         mime="text/csv",
+        key="download_final"
     )
 
     st.markdown("### Method & Validation (K-Means)")
