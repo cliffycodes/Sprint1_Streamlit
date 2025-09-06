@@ -244,7 +244,7 @@ elif menu == "Resilient Essentials":
     plt.show()
     st.pyplot(plt)
 
-    st.markdown("## How well do Resilient Essentials customers interact per category")
+    st.markdown("## How well do Resilient Essentials customers interact per category?")
     # --- Setup ---
     cluster = 0
 
@@ -486,7 +486,7 @@ elif menu == "Rebound Discretionary":
     plt.show()
     st.pyplot(plt) 
 
-    st.markdown("## How well do Rebound Discretionary customers interact per category")
+    st.markdown("## How well do Rebound Discretionary customers interact per category?")
 
     # --- Parameters ---
     cluster = 1
@@ -625,7 +625,7 @@ elif menu == "Rebound Discretionary":
     st.pyplot(plt)   # ✅ no plt.show()
 elif menu == "Dormant Big-Ticket": 
     st.markdown("# Dormant Big-Ticket Transactions Profile")
-    st.markdown("## When did Dormant Big-Ticket customers last transact??")
+    st.markdown("## When did Dormant Big-Ticket customers last transact?")
 
     recency_bins = [
         '(110, 140]', '(140, 170]', '(170, 200]', '(200, 230]', '(230, 260]',
@@ -756,7 +756,7 @@ elif menu == "Dormant Big-Ticket":
     st.pyplot(plt)   # ✅ no plt.show()  
 
 
-    st.markdown("## How well do Dormant Big-Ticket customers interact per category")
+    st.markdown("## How well do Dormant Big-Ticket customers interact per category?")
 
     # --- Setup ---
     cluster = 2
