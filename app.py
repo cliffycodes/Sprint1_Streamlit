@@ -249,12 +249,14 @@ elif menu == "Resilient Essentials":
     # Category
         # --- Setup ---
     cluster = 0
-    # Sidebar selectors
-    cluster = st.sidebar.selectbox("Select Cluster", sorted(df1['cluster'].unique()))
 
     # Only show years that exist for this cluster
-    available_years = sorted(df1.loc[df1['cluster']==cluster, 'YEAR'].unique())
-    year = st.sidebar.selectbox("Select Year", available_years)
+    available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
+    if available_years:
+        year = st.sidebar.selectbox("Select Year", available_years, index=len(available_years)-1)  # default to latest year
+    else:
+        st.warning(f"No data available for cluster {cluster}")
+        st.stop()
 
 
     # Define the ratio columns
