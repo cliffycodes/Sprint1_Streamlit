@@ -315,6 +315,62 @@ elif menu == "Resilient Essentials":
     plt.show()
     st.pyplot(plt)
 
+    # Category YoY
+    ### Category Strength
+
+    st.markdown("## How much do Resilient Essentials customers spend per category monthly?")
+    # Filter by category
+    category = 'food_dining' # Change this to check all categories
+    cluster = 0
+
+
+    aggregate = df1[['cc_num','amt','category','trans_month_year','YEAR']][df1['cluster']==cluster].groupby(['cc_num','category','trans_month_year','YEAR']).sum().reset_index()
+    aggregate = aggregate.drop(columns=['cc_num'])
+    aggregate1 = aggregate.groupby(['trans_month_year','category','YEAR']).median().reset_index()
+    aggregate1 = aggregate1.loc[aggregate1['trans_month_year']<'2021-12']
+
+    aggregate1 = aggregate1.loc[aggregate1['category'] == category]
+
+    # Convert period[M] to timestamp if needed
+    aggregate1['trans_month_year'] = aggregate1['trans_month_year'].dt.to_timestamp()
+
+    # Extract year and month
+    aggregate1['year'] = aggregate1['trans_month_year'].dt.year
+    aggregate1['month'] = aggregate1['trans_month_year'].dt.month
+
+    # Group by year and month to get monthly sums
+    grouped = aggregate1.groupby(['year', 'month'], as_index=False)['amt'].sum()
+
+    # Pivot for plotting
+    pivot_df = grouped.pivot(index='month', columns='year', values='amt')
+
+    # Calculate median per year
+    medians = grouped.groupby('year')['amt'].median()
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+
+    # Monthly billings (solid pastel blue)
+    plt.plot(pivot_df.index, pivot_df[2020], label='2020 Monthly', color='#603470', alpha=0.2)
+    plt.plot(pivot_df.index, pivot_df[2021], label='2021 Monthly', color='#603470', alpha=1.0)
+
+    # Median billings (horizontal broken pastel green)
+    plt.hlines(medians[2020], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2020 Median', alpha=0.4)
+    plt.hlines(medians[2021], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2021 Median', alpha=1.0)
+
+    # Customize
+    plt.title(f"Resilient Essentials: {category} Median Monthly Billings per User")
+    plt.xlabel('Month')
+    plt.ylabel('Amount')
+    plt.xticks(ticks=range(1, 13), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+    plt.legend()
+    plt.grid(False)
+    plt.tight_layout()
+
+    plt.show()
+
+
 
 elif menu == "Rebound Discretionary": 
     st.markdown("# Rebound Discretionary Transaction Profile")
@@ -531,6 +587,61 @@ elif menu == "Rebound Discretionary":
     plt.show()
     st.pyplot(plt) 
 
+    st.markdown("## How much do Rebound Discretionary customers spend per category monthly?")
+    ### Category Strength
+
+    # Filter by category
+    category = 'food_dining' # Change this to check all categories
+    cluster = 1
+
+
+    aggregate = df1[['cc_num','amt','category','trans_month_year','YEAR']][df1['cluster']==cluster].groupby(['cc_num','category','trans_month_year','YEAR']).sum().reset_index()
+    aggregate = aggregate.drop(columns=['cc_num'])
+    aggregate1 = aggregate.groupby(['trans_month_year','category','YEAR']).median().reset_index()
+    aggregate1 = aggregate1.loc[aggregate1['trans_month_year']<'2021-12']
+
+    aggregate1 = aggregate1.loc[aggregate1['category'] == category]
+
+    # Convert period[M] to timestamp if needed
+    aggregate1['trans_month_year'] = aggregate1['trans_month_year'].dt.to_timestamp()
+
+    # Extract year and month
+    aggregate1['year'] = aggregate1['trans_month_year'].dt.year
+    aggregate1['month'] = aggregate1['trans_month_year'].dt.month
+
+    # Group by year and month to get monthly sums
+    grouped = aggregate1.groupby(['year', 'month'], as_index=False)['amt'].sum()
+
+    # Pivot for plotting
+    pivot_df = grouped.pivot(index='month', columns='year', values='amt')
+
+    # Calculate median per year
+    medians = grouped.groupby('year')['amt'].median()
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+
+    # Monthly billings (solid pastel blue)
+    plt.plot(pivot_df.index, pivot_df[2020], label='2020 Monthly', color='#d25784', alpha=0.2)
+    plt.plot(pivot_df.index, pivot_df[2021], label='2021 Monthly', color='#d25784', alpha=1.0)
+
+    # Median billings (horizontal broken pastel green)
+    plt.hlines(medians[2020], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2020 Median', alpha=0.4)
+    plt.hlines(medians[2021], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2021 Median', alpha=1.0)
+
+    # Customize
+    plt.title(f"Rebound Discretionary: {category} Median Monthly Billings per User")
+    plt.xlabel('Month')
+    plt.ylabel('Amount')
+    plt.xticks(ticks=range(1, 13), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+    plt.legend()
+    plt.grid(False)
+    plt.tight_layout()
+
+    plt.show()
+
+
 elif menu == "Dormant Big-Ticket": 
     st.markdown("# Dormant Big-Ticket Transaction Profile")
     st.markdown("## When did Dormant Big-Ticket customers last transact??")
@@ -733,4 +844,56 @@ elif menu == "Dormant Big-Ticket":
     st.pyplot(plt) 
 
 
+    st.markdown("## How much do Dormant Big-Ticket customers spend per category monthly?")
+    ### Category Strength
 
+    # Filter by category
+    category = 'food_dining' # Change this to check all categories
+    cluster = 0
+
+
+    aggregate = df1[['cc_num','amt','category','trans_month_year','YEAR']][df1['cluster']==cluster].groupby(['cc_num','category','trans_month_year','YEAR']).sum().reset_index()
+    aggregate = aggregate.drop(columns=['cc_num'])
+    aggregate1 = aggregate.groupby(['trans_month_year','category','YEAR']).median().reset_index()
+    aggregate1 = aggregate1.loc[aggregate1['trans_month_year']<'2021-12']
+
+    aggregate1 = aggregate1.loc[aggregate1['category'] == category]
+
+    # Convert period[M] to timestamp if needed
+    aggregate1['trans_month_year'] = aggregate1['trans_month_year'].dt.to_timestamp()
+
+    # Extract year and month
+    aggregate1['year'] = aggregate1['trans_month_year'].dt.year
+    aggregate1['month'] = aggregate1['trans_month_year'].dt.month
+
+    # Group by year and month to get monthly sums
+    grouped = aggregate1.groupby(['year', 'month'], as_index=False)['amt'].sum()
+
+    # Pivot for plotting
+    pivot_df = grouped.pivot(index='month', columns='year', values='amt')
+
+    # Calculate median per year
+    medians = grouped.groupby('year')['amt'].median()
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+
+    # Monthly billings (solid pastel blue)
+    plt.plot(pivot_df.index, pivot_df[2020], label='2020 Monthly', color='#e6a752', alpha=0.4)
+    plt.plot(pivot_df.index, pivot_df[2021], label='2021 Monthly', color='#e6a752', alpha=1.0)
+
+    # Median billings (horizontal broken pastel green)
+    plt.hlines(medians[2020], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2020 Median', alpha=0.4)
+    plt.hlines(medians[2021], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2021 Median', alpha=1.0)
+
+    # Customize
+    plt.title(f"Dormant Big-Ticket: {category} Median Monthly Billings per User")
+    plt.xlabel('Month')
+    plt.ylabel('Amount')
+    plt.xticks(ticks=range(1, 13), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+    plt.legend()
+    plt.grid(False)
+    plt.tight_layout()
+
+    plt.show()
