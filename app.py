@@ -309,7 +309,9 @@ elif menu == "Resilient Essentials":
 
     st.markdown("## How much do Resilient Essentials customers spend per category monthly?")
     # Filter by category
-    category = 'food_dining' # Change this to check all categories
+    # --- NEW: interactive category selection ---
+    categories = sorted(df1['category'].unique())
+    category = st.selectbox("Select Category", categories)  # interactive category selection
     cluster = 0
 
 
