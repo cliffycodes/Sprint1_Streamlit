@@ -123,7 +123,7 @@ if menu == "Overview":
 
 
 elif menu == "Resilient Essentials": 
-    st.markdown("#Resilient Essentials Transaction Profile")
+    st.markdown("# Resilient Essentials Transaction Profile")
     st.markdown("## When did Resilient Essentials customers last transact?")
 
     recency_ranges = ['(0, 30]', '(30, 60]', '(60, 90]']
@@ -193,8 +193,57 @@ elif menu == "Resilient Essentials":
     plt.show()
     st.pyplot(plt)   # ✅ no plt.show()
 
+    # Cluster = 0
+    cluster = 0
+    aggregate= df1[['trans_month_year','trans_num','acct_num2']][df1['cluster']==cluster].groupby(['trans_month_year','acct_num2']).count().reset_index()
+    aggregate1 = aggregate[['trans_month_year','trans_num']].groupby(['trans_month_year']).mean().reset_index() 
+    aggregate1
+
+    # Convert period[M] to timestamp if needed
+    aggregate1['trans_month_year'] = aggregate1['trans_month_year'].dt.to_timestamp()
+
+    # Extract year and month
+    aggregate1['year'] = aggregate1['trans_month_year'].dt.year
+    aggregate1['month'] = aggregate1['trans_month_year'].dt.month
+
+    # Group by year and month (already aggregated but keeping structure consistent)
+    grouped = aggregate1.groupby(['year', 'month'], as_index=False)['trans_num'].mean()
+
+    # Pivot for plotting
+    pivot_df = grouped.pivot(index='month', columns='year', values='trans_num')
+
+    # Calculate median per year
+    medians = grouped.groupby('year')['trans_num'].median()
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+
+    # Monthly transactions (solid pastel blue)
+    if 2020 in pivot_df.columns:
+        plt.plot(pivot_df.index, pivot_df[2020], label='2020 Monthly', color='#603470', alpha=0.2)
+    if 2021 in pivot_df.columns:
+        plt.plot(pivot_df.index, pivot_df[2021], label='2021 Monthly', color='#603470', alpha=1.0)
+
+    # Median transactions (horizontal broken pastel green)
+    if 2020 in medians.index:
+        plt.hlines(medians[2020], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2020 Median', alpha=0.4)
+    if 2021 in medians.index:
+        plt.hlines(medians[2021], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2021 Median', alpha=1.0)
+
+    # Customize
+    plt.title("Resilient Essentials Transactions per Month")
+    plt.xlabel('Month')
+    plt.ylabel('Avg Transactions per User')
+    plt.xticks(ticks=range(1, 13), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+    plt.legend()
+    plt.grid(False)
+    plt.tight_layout()
+
+    plt.show()
+    st.pyplot(plt)   # ✅ no plt.show()
 elif menu == "Rebound Discretionary": 
-    st.markdown("#Rebound Discretionary Transaction Profile")
+    st.markdown("# Rebound Discretionary Transaction Profile")
     st.markdown("## When did Rebound Discretionary customers last transact?")
 
     recency_ranges = ['(0, 30]', '(30, 60]']
@@ -263,10 +312,60 @@ elif menu == "Rebound Discretionary":
     plt.legend()
     plt.grid(False)
     plt.tight_layout()
-    st.pyplot(plt)   # ✅ no plt.show()
+    st.pyplot(plt)  
+
+    # Cluster = 1
+    cluster = 1
+    aggregate= df1[['trans_month_year','trans_num','acct_num2']][df1['cluster']==cluster].groupby(['trans_month_year','acct_num2']).count().reset_index()
+    aggregate1 = aggregate[['trans_month_year','trans_num']].groupby(['trans_month_year']).mean().reset_index() 
+    aggregate1
+
+    # Convert period[M] to timestamp if needed
+    aggregate1['trans_month_year'] = aggregate1['trans_month_year'].dt.to_timestamp()
+
+    # Extract year and month
+    aggregate1['year'] = aggregate1['trans_month_year'].dt.year
+    aggregate1['month'] = aggregate1['trans_month_year'].dt.month
+
+    # Group by year and month (already aggregated but keeping structure consistent)
+    grouped = aggregate1.groupby(['year', 'month'], as_index=False)['trans_num'].mean()
+
+    # Pivot for plotting
+    pivot_df = grouped.pivot(index='month', columns='year', values='trans_num')
+
+    # Calculate median per year
+    medians = grouped.groupby('year')['trans_num'].median()
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+
+    # Monthly transactions (solid pastel blue)
+    if 2020 in pivot_df.columns:
+        plt.plot(pivot_df.index, pivot_df[2020], label='2020 Monthly', color='#d25784', alpha=0.4)
+    if 2021 in pivot_df.columns:
+        plt.plot(pivot_df.index, pivot_df[2021], label='2021 Monthly', color='#d25784', alpha=1.0)
+
+    # Median transactions (horizontal broken pastel green)
+    if 2020 in medians.index:
+        plt.hlines(medians[2020], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2020 Median', alpha=0.2)
+    if 2021 in medians.index:
+        plt.hlines(medians[2021], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2021 Median', alpha=1.0)
+
+    # Customize
+    plt.title("Rebound Discretionary Transactions per Month")
+    plt.xlabel('Month')
+    plt.ylabel('Avg Transactions per User')
+    plt.xticks(ticks=range(1, 13), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+    plt.legend()
+    plt.grid(False)
+    plt.tight_layout()
+
+    plt.show()
+    st.pyplot(plt) 
 
 elif menu == "Dormant Big-Ticket": 
-    st.markdown("#Dormant Big-Ticket Transaction Profile")
+    st.markdown("# Dormant Big-Ticket Transaction Profile")
     st.markdown("## When did Dormant Big-Ticket customers last transact??")
 
     recency_bins = [
@@ -344,6 +443,57 @@ elif menu == "Dormant Big-Ticket":
 
     plt.show()
     st.pyplot(plt)   # ✅ no plt.show()    
+
+
+    # Cluster = 2
+    cluster = 2
+    aggregate= df1[['trans_month_year','trans_num','acct_num2']][df1['cluster']==cluster].groupby(['trans_month_year','acct_num2']).count().reset_index()
+    aggregate1 = aggregate[['trans_month_year','trans_num']].groupby(['trans_month_year']).mean().reset_index() 
+    aggregate1
+
+    # Convert period[M] to timestamp if needed
+    aggregate1['trans_month_year'] = aggregate1['trans_month_year'].dt.to_timestamp()
+
+    # Extract year and month
+    aggregate1['year'] = aggregate1['trans_month_year'].dt.year
+    aggregate1['month'] = aggregate1['trans_month_year'].dt.month
+
+    # Group by year and month (already aggregated but keeping structure consistent)
+    grouped = aggregate1.groupby(['year', 'month'], as_index=False)['trans_num'].mean()
+
+    # Pivot for plotting
+    pivot_df = grouped.pivot(index='month', columns='year', values='trans_num')
+
+    # Calculate median per year
+    medians = grouped.groupby('year')['trans_num'].median()
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+
+    # Monthly transactions (solid pastel blue)
+    if 2020 in pivot_df.columns:
+        plt.plot(pivot_df.index, pivot_df[2020], label='2020 Monthly', color='#e6a752', alpha=0.4)
+    if 2021 in pivot_df.columns:
+        plt.plot(pivot_df.index, pivot_df[2021], label='2021 Monthly', color='#e6a752', alpha=1.0)
+
+    # Median transactions (horizontal broken pastel green)
+    if 2020 in medians.index:
+        plt.hlines(medians[2020], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2020 Median', alpha=0.2)
+    if 2021 in medians.index:
+        plt.hlines(medians[2021], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2021 Median', alpha=1.0)
+
+    # Customize
+    plt.title("Dormant Big-Ticket Transactions per Month")
+    plt.xlabel('Month')
+    plt.ylabel('Avg Transactions per User')
+    plt.xticks(ticks=range(1, 13), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'])
+    plt.legend()
+    plt.grid(False)
+    plt.tight_layout()
+
+    plt.show()
+    st.pyplot(plt)   # ✅ no plt.show()  
 
 
 
