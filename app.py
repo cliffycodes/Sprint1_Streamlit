@@ -30,7 +30,7 @@ df1 = df1.drop_duplicates(subset=['trans_num'])
 
 
 
-st.set_page_config(page_title="Adobo Bank Customer",layout="wide")
+st.set_page_config(page_title="Adobo Bank Customer Segmentation",layout="wide")
 
 # Sidebar with bigger text
 st.sidebar.markdown("<h1 style='font-size:60px;'>Resilient VS Rebound</h1>", unsafe_allow_html=True)
