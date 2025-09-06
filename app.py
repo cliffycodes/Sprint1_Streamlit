@@ -32,9 +32,22 @@ df1 = df1.drop_duplicates(subset=['trans_num'])
 
 st.set_page_config(page_title="My first streamlit project",layout="wide")
 
-# Sidebar
-st.sidebar.title("Resilient VS Rebound")
-menu = st.sidebar.radio("",["Overview","Resilient Essentials","Rebound Discretionary","Dormant Big-Ticket"])
+# Sidebar with bigger text
+st.sidebar.markdown("<h1 style='font-size:28px;'>Resilient VS Rebound</h1>", unsafe_allow_html=True)
+
+# Bigger radio buttons
+st.sidebar.markdown(
+    """
+    <style>
+    .sidebar .sidebar-content .stRadio div label {
+        font-size: 20px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+menu = st.sidebar.radio("", ["Overview", "Resilient Essentials", "Rebound Discretionary", "Dormant Big-Ticket"])
 
 data_dir = "data"
 image_dir = "images"
