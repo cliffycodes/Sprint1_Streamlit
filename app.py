@@ -773,82 +773,79 @@ elif menu == "Dormant Big-Ticket":
     plt.show()
     st.pyplot(plt)   # ✅ no plt.show()  
 
-   import numpy as np
-import matplotlib.pyplot as plt
-import streamlit as st
 
-st.markdown("## How well do Dormant Big-Ticket customers interact per category")
+    st.markdown("## How well do Dormant Big-Ticket customers interact per category")
 
-# --- Setup ---
-cluster = 2
+    # --- Setup ---
+    cluster = 2
 
-# Ensure YEAR column exists and is integer
-if 'YEAR' in df1.columns:
-    if pd.api.types.is_period_dtype(df1['YEAR']):
-        df1['YEAR'] = df1['YEAR'].dt.year
-else:
-    df1['YEAR'] = df1['trans_month_year'].dt.year
+    # Ensure YEAR column exists and is integer
+    if 'YEAR' in df1.columns:
+        if pd.api.types.is_period_dtype(df1['YEAR']):
+            df1['YEAR'] = df1['YEAR'].dt.year
+    else:
+        df1['YEAR'] = df1['trans_month_year'].dt.year
 
-# Only show years that exist for this cluster
-available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
+    # Only show years that exist for this cluster
+    available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
 
-# Select year interactively
-year = st.sidebar.selectbox("Select Year", available_years, index=len(available_years)-1)  # default = latest year
+    # Select year interactively
+    year = st.sidebar.selectbox("Select Year", available_years, index=len(available_years)-1)  # default = latest year
 
-# Define the ratio columns
-ratio_cols = [
-    'entertainment_ratio', 'food_dining_ratio', 'gas_transport_ratio',
-    'grocery_net_ratio', 'grocery_pos_ratio', 'health_fitness_ratio',
-    'home_ratio', 'kids_pets_ratio', 'misc_net_ratio', 'misc_pos_ratio',
-    'personal_care_ratio', 'shopping_net_ratio', 'shopping_pos_ratio',
-    'travel_ratio'
-]
+    # Define the ratio columns
+    ratio_cols = [
+        'entertainment_ratio', 'food_dining_ratio', 'gas_transport_ratio',
+        'grocery_net_ratio', 'grocery_pos_ratio', 'health_fitness_ratio',
+        'home_ratio', 'kids_pets_ratio', 'misc_net_ratio', 'misc_pos_ratio',
+        'personal_care_ratio', 'shopping_net_ratio', 'shopping_pos_ratio',
+        'travel_ratio'
+    ]
 
-# --- Filter for cluster + year ---
-filtered_df = df1.loc[
-    (df1['cluster'] == cluster) & (df1['YEAR'] == year),
-    ['cluster'] + ratio_cols
-]
+    # --- Filter for cluster + year ---
+    filtered_df = df1.loc[
+        (df1['cluster'] == cluster) & (df1['YEAR'] == year),
+        ['cluster'] + ratio_cols
+    ]
 
-if filtered_df.empty:
-    st.warning(f"No data found for cluster {cluster} in year {year}")
-else:
-    # --- Aggregate averages ---
-    cluster_avg = filtered_df.groupby(['cluster']).mean().reset_index()
+    if filtered_df.empty:
+        st.warning(f"No data found for cluster {cluster} in year {year}")
+    else:
+        # --- Aggregate averages ---
+        cluster_avg = filtered_df.groupby(['cluster']).mean().reset_index()
 
-    # Extract ratios
-    values = cluster_avg[ratio_cols].iloc[0].values
+        # Extract ratios
+        values = cluster_avg[ratio_cols].iloc[0].values
 
-    # --- Normalize (min-max scaling within this cluster’s ratios) ---
-    scaled_values = (values - values.min()) / (values.max() - values.min())
+        # --- Normalize (min-max scaling within this cluster’s ratios) ---
+        scaled_values = (values - values.min()) / (values.max() - values.min())
 
-    # --- Radar chart setup ---
-    categories = ratio_cols
-    N = len(categories)
+        # --- Radar chart setup ---
+        categories = ratio_cols
+        N = len(categories)
 
-    # Repeat first value to close the circle
-    scaled_values = np.concatenate((scaled_values, [scaled_values[0]]))
-    angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
-    angles += angles[:1]
+        # Repeat first value to close the circle
+        scaled_values = np.concatenate((scaled_values, [scaled_values[0]]))
+        angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
+        angles += angles[:1]
 
-    # --- Plot ---
-    fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
+        # --- Plot ---
+        fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
 
-    ax.plot(angles, scaled_values, color="#e6a752", linewidth=2)
-    ax.fill(angles, scaled_values, color="#e6a752", alpha=0.25)
+        ax.plot(angles, scaled_values, color="#e6a752", linewidth=2)
+        ax.fill(angles, scaled_values, color="#e6a752", alpha=0.25)
 
-    # Add category labels
-    ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(categories, fontsize=10)
+        # Add category labels
+        ax.set_xticks(angles[:-1])
+        ax.set_xticklabels(categories, fontsize=10)
 
-    # Radial scale labels
-    ax.set_yticks([0.25, 0.5, 0.75, 1.0])
-    ax.set_yticklabels(["Weak", "Moderate", "Strong", "Very Strong"], fontsize=9)
+        # Radial scale labels
+        ax.set_yticks([0.25, 0.5, 0.75, 1.0])
+        ax.set_yticklabels(["Weak", "Moderate", "Strong", "Very Strong"], fontsize=9)
 
-    # Title
-    ax.set_title(f"Dormant Big-Ticket Category Strength ({year})", size=14, y=1.1)
+        # Title
+        ax.set_title(f"Dormant Big-Ticket Category Strength ({year})", size=14, y=1.1)
 
-    st.pyplot(fig)
+        st.pyplot(fig)
     
 
 
