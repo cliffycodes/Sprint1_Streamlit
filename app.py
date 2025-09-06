@@ -311,7 +311,7 @@ elif menu == "Resilient Essentials":
     ax.set_title(f"Resilient Essentials Category Strength", size=14, y=1.1)
 
     plt.show()
-
+    st.pyplot(plt)
 
 
 elif menu == "Rebound Discretionary": 
