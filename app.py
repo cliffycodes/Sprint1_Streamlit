@@ -249,15 +249,7 @@ elif menu == "Resilient Essentials":
     # Category
         # --- Setup ---
     cluster = 0
-
-    # Only show years that exist for this cluster
-    available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
-    if available_years:
-        year = st.sidebar.selectbox("Select Year", available_years, index=len(available_years)-1)  # default to latest year
-    else:
-        st.warning(f"No data available for cluster {cluster}")
-        st.stop()
-
+    year = 2021  # pick year as int
 
     # Define the ratio columns
     ratio_cols = [
@@ -508,7 +500,7 @@ elif menu == "Rebound Discretionary":
     # Category
     # --- Parameters ---
     cluster = 1
-    year = st.sidebar.selectbox("Select Year", sorted(df1['YEAR'].unique()))
+    year = 2021  # pick year as int
 
     ratio_cols = [
         'entertainment_ratio', 'food_dining_ratio', 'gas_transport_ratio',
@@ -781,39 +773,48 @@ elif menu == "Dormant Big-Ticket":
     plt.show()
     st.pyplot(plt)   # ✅ no plt.show()  
 
-    st.markdown("## How well do Dormant Big-Ticket customers interact per category")
-    # --- Setup ---
-    cluster = 2
-    year = st.sidebar.selectbox("Select Year", sorted(df1['YEAR'].unique()))
+   import numpy as np
+import matplotlib.pyplot as plt
+import streamlit as st
 
-    # Define the ratio columns
-    ratio_cols = [
-        'entertainment_ratio', 'food_dining_ratio', 'gas_transport_ratio',
-        'grocery_net_ratio', 'grocery_pos_ratio', 'health_fitness_ratio',
-        'home_ratio', 'kids_pets_ratio', 'misc_net_ratio', 'misc_pos_ratio',
-        'personal_care_ratio', 'shopping_net_ratio', 'shopping_pos_ratio',
-        'travel_ratio'
-    ]
+st.markdown("## How well do Dormant Big-Ticket customers interact per category")
 
-    # --- Ensure YEAR column is integer ---
-    if 'YEAR' in df1.columns:
-        if pd.api.types.is_period_dtype(df1['YEAR']):
-            df1['YEAR'] = df1['YEAR'].dt.year
-    else:
-        # derive from trans_month_year if missing
-        df1['YEAR'] = df1['trans_month_year'].dt.year
+# --- Setup ---
+cluster = 2
 
-    # --- Filter for cluster + year ---
-    filtered_df = df1.loc[
-        (df1['cluster'] == cluster) & (df1['YEAR'] == year),
-        ['cluster'] + ratio_cols
-    ]
+# Ensure YEAR column exists and is integer
+if 'YEAR' in df1.columns:
+    if pd.api.types.is_period_dtype(df1['YEAR']):
+        df1['YEAR'] = df1['YEAR'].dt.year
+else:
+    df1['YEAR'] = df1['trans_month_year'].dt.year
 
+# Only show years that exist for this cluster
+available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
+
+# Select year interactively
+year = st.sidebar.selectbox("Select Year", available_years, index=len(available_years)-1)  # default = latest year
+
+# Define the ratio columns
+ratio_cols = [
+    'entertainment_ratio', 'food_dining_ratio', 'gas_transport_ratio',
+    'grocery_net_ratio', 'grocery_pos_ratio', 'health_fitness_ratio',
+    'home_ratio', 'kids_pets_ratio', 'misc_net_ratio', 'misc_pos_ratio',
+    'personal_care_ratio', 'shopping_net_ratio', 'shopping_pos_ratio',
+    'travel_ratio'
+]
+
+# --- Filter for cluster + year ---
+filtered_df = df1.loc[
+    (df1['cluster'] == cluster) & (df1['YEAR'] == year),
+    ['cluster'] + ratio_cols
+]
+
+if filtered_df.empty:
+    st.warning(f"No data found for cluster {cluster} in year {year}")
+else:
     # --- Aggregate averages ---
     cluster_avg = filtered_df.groupby(['cluster']).mean().reset_index()
-
-    if cluster_avg.empty:
-        raise ValueError(f"No data found for cluster {cluster} in year {year}")
 
     # Extract ratios
     values = cluster_avg[ratio_cols].iloc[0].values
@@ -845,10 +846,10 @@ elif menu == "Dormant Big-Ticket":
     ax.set_yticklabels(["Weak", "Moderate", "Strong", "Very Strong"], fontsize=9)
 
     # Title
-    ax.set_title(f"Dormant Big-Ticket Category Strength", size=14, y=1.1)
+    ax.set_title(f"Dormant Big-Ticket Category Strength ({year})", size=14, y=1.1)
 
-    plt.show()
-    st.pyplot(plt) 
+    st.pyplot(fig)
+    
 
 
     st.markdown("## How much do Dormant Big-Ticket customers spend per category monthly?")
