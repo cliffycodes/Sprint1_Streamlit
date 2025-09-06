@@ -36,19 +36,17 @@ st.sidebar.markdown("<h1 style='font-size:60px;'>Resilient VS Rebound</h1>", uns
 st.sidebar.markdown(
     """
     <style>
-    /* Make radio button labels huge */
-    .stRadio div label {
-        font-size: 36px;  /* Big text */
-        padding: 20px 0;  /* Space between options */
+    /* Target the radio buttons in the sidebar */
+    .sidebar .stRadio div[data-baseweb="radio"] label {
+        font-size: 48px !important;   /* Bigger text */
+        padding: 25px 0 !important;   /* More space between options */
         display: flex;
         align-items: center;
     }
 
-    /* Make the actual radio circle huge */
-    .stRadio div input[type="radio"] {
-        width: 40px;       /* Bigger circle */
-        height: 40px;
-        margin-right: 20px; /* Space between circle and label */
+    .sidebar .stRadio div[data-baseweb="radio"] input[type="radio"] {
+        transform: scale(2.5);        /* Make the circle much bigger */
+        margin-right: 25px;
     }
     </style>
     """,
