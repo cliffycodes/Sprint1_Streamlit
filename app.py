@@ -11,7 +11,7 @@ final_account_labels = pd.read_csv(rf"data/final_acct_table.csv")
 
 # Figure out which columns to bring from final_account_labels
 # Always include acct_num2 and cluster when merging
-cols_to_add = ["acct_num2", "cluster"] + [c for c in final_account_labels.columns if c not in df.columns]
+cols_to_add = [c for c in final_account_labels.columns if c not in df.columns or c == "acct_num2"]
 
 # Merge cleanly
 df1 = df.merge(final_account_labels[cols_to_add], on="acct_num2", how="left")
