@@ -500,14 +500,21 @@ elif menu == "Rebound Discretionary":
 
     st.markdown("## How well do Rebound Discretionary customers interact per category")
 
-    # Category
     # --- Parameters ---
     cluster = 1
-    available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
 
-    # Select year interactively (in main page, above chart)
+    # Ensure YEAR column is integer
+    if 'YEAR' in df1.columns:
+        if pd.api.types.is_period_dtype(df1['YEAR']):
+            df1['YEAR'] = df1['YEAR'].dt.year
+    else:
+        df1['YEAR'] = df1['trans_month_year'].dt.year
+
+    # Select year interactively (Streamlit)
+    available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
     year = st.selectbox("Select Year", available_years, index=len(available_years)-1)  # default = latest year
 
+    # Ratios
     ratio_cols = [
         'entertainment_ratio', 'food_dining_ratio', 'gas_transport_ratio',
         'grocery_net_ratio', 'grocery_pos_ratio', 'health_fitness_ratio',
@@ -516,27 +523,19 @@ elif menu == "Rebound Discretionary":
         'travel_ratio'
     ]
 
-    # --- Ensure YEAR column is integer ---
-    if 'YEAR' in df1.columns:
-        if pd.api.types.is_period_dtype(df1['YEAR']):
-            df1['YEAR'] = df1['YEAR'].dt.year
-    else:
-        df1['YEAR'] = df1['trans_month_year'].dt.year
-
-    # --- Skew ratios directly in df1 for selected clusters ---
+    # --- Skew ratios for selected clusters ---
     boost_factors = {
-        'food_dining_ratio': 2.0,   # +100% boost
-        'travel_ratio': 2.5,        # +150% boost
-        'shopping_pos_ratio': 2.0   # +100% boost
+        'food_dining_ratio': 2.0,
+        'travel_ratio': 2.5,
+        'shopping_pos_ratio': 2.0
     }
 
-    target_clusters = [1]  # skew only these clusters
-
+    target_clusters = [cluster]  # only apply to this cluster
     for col, factor in boost_factors.items():
         if col in df1.columns:
             df1.loc[df1['cluster'].isin(target_clusters), col] *= factor
 
-    # --- Cap ratios at 1.0 to avoid >100% ---
+    # --- Cap ratios at 1.0 ---
     df1[ratio_cols] = df1[ratio_cols].clip(upper=1.0)
 
     # --- Filter for cluster + year ---
@@ -545,53 +544,41 @@ elif menu == "Rebound Discretionary":
         ['cluster'] + ratio_cols
     ]
 
-    # --- Aggregate averages ---
-    cluster_avg = filtered_df.groupby(['cluster']).mean().reset_index()
+    if filtered_df.empty:
+        st.warning(f"No data found for cluster {cluster} in year {year}")
+    else:
+        # Aggregate averages
+        cluster_avg = filtered_df.groupby(['cluster']).mean().reset_index()
+        values = cluster_avg[ratio_cols].iloc[0].values
 
-    if cluster_avg.empty:
-        raise ValueError(f"No data found for cluster {cluster} in year {year}")
+        # --- Apply weights to key categories ---
+        weights = np.ones(len(ratio_cols))
+        for i, col in enumerate(ratio_cols):
+            if col in ["food_dining_ratio", "travel_ratio", "shopping_pos_ratio"]:
+                weights[i] = 1.5
+        values = values * weights
 
-    # Extract ratios
-    values = cluster_avg[ratio_cols].iloc[0].values
+        # --- Normalize to 0-1 ---
+        scaled_values = (values - values.min()) / (values.max() - values.min())
 
-    # --- Normalize but ADD WEIGHT to food/travel/shopping_pos before scaling ---
-    weights = np.ones(len(ratio_cols))
-    for i, col in enumerate(ratio_cols):
-        if col in ["food_dining_ratio", "travel_ratio", "shopping_pos_ratio"]:
-            weights[i] = 1.5  # extra 50% weight AFTER aggregation
+        # --- Radar chart setup ---
+        N = len(ratio_cols)
+        scaled_values = np.concatenate((scaled_values, [scaled_values[0]]))
+        angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
+        angles += angles[:1]
 
-    values = values * weights
+        fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
+        ax.plot(angles, scaled_values, color="#d25784", linewidth=2)
+        ax.fill(angles, scaled_values, color="#d25784", alpha=0.25)
 
-    scaled_values = (values - values.min()) / (values.max() - values.min())
+        ax.set_xticks(angles[:-1])
+        ax.set_xticklabels(ratio_cols, fontsize=10)
+        ax.set_yticks([0.25, 0.5, 0.75, 1.0])
+        ax.set_yticklabels(["Weak", "Moderate", "Strong", "Very Strong"], fontsize=9)
+        ax.set_title(f"Rebound Discretionary Category Strength ({year})", size=14, y=1.1)
 
-    # --- Radar chart setup ---
-    categories = ratio_cols
-    N = len(categories)
-
-    # Repeat first value to close the circle
-    scaled_values = np.concatenate((scaled_values, [scaled_values[0]]))
-    angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
-    angles += angles[:1]
-
-    # --- Plot ---
-    fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
-
-    ax.plot(angles, scaled_values, color="#d25784", linewidth=2)
-    ax.fill(angles, scaled_values, color="#d25784", alpha=0.25)
-
-    # Add category labels
-    ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(categories, fontsize=10)
-
-    # Radial scale labels
-    ax.set_yticks([0.25, 0.5, 0.75, 1.0])
-    ax.set_yticklabels(["Weak", "Moderate", "Strong", "Very Strong"], fontsize=9)
-
-    # Title
-    ax.set_title(f"Rebound Discretionary Category Strength ({year}", size=14, y=1.1)
-
-    plt.show()
-    st.pyplot(plt) 
+        # Streamlit render
+        st.pyplot(fig)
 
     st.markdown("## How much do Rebound Discretionary customers spend per category monthly?")
     ### Category Strength
