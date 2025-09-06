@@ -244,6 +244,8 @@ elif menu == "Resilient Essentials":
     plt.show()
     st.pyplot(plt)
 
+    st.markdown("## How well do Resilient Essentials customers interact per category")
+
     # Category
         # --- Setup ---
     cluster = 0
@@ -436,6 +438,8 @@ elif menu == "Rebound Discretionary":
 
     plt.show()
     st.pyplot(plt) 
+
+    st.markdown("## How well do Rebound Discretionary customers interact per category")
 
     # Category
     # --- Parameters ---
@@ -659,6 +663,7 @@ elif menu == "Dormant Big-Ticket":
     plt.show()
     st.pyplot(plt)   # ✅ no plt.show()  
 
+    st.markdown("## How well do Dormant Big-Ticket customers interact per category")
     # --- Setup ---
     cluster = 2
     year = 2021  # pick year as int
