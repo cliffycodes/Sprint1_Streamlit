@@ -181,7 +181,7 @@ elif menu == "Resilient Essentials":
         plt.hlines(medians[2021], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2021 Median', alpha=1.0)
 
     # Customize
-    plt.title("Resilient Essentials Transactions per Month")
+    plt.title("Resilient Essentials Average Transactions per Month")
     plt.xlabel('Month')
     plt.ylabel('Avg Transactions per User')
     plt.xticks(ticks=range(1, 13), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -425,7 +425,7 @@ elif menu == "Rebound Discretionary":
         plt.hlines(medians[2021], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2021 Median', alpha=1.0)
 
     # Customize
-    plt.title("Rebound Discretionary Transactions per Month")
+    plt.title("Rebound Discretionary Average Transactions per Month")
     plt.xlabel('Month')
     plt.ylabel('Avg Transactions per User')
     plt.xticks(ticks=range(1, 13), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -691,7 +691,7 @@ elif menu == "Dormant Big-Ticket":
         plt.hlines(medians[2021], xmin=1, xmax=12, colors='lightgreen', linestyles='--', label='2021 Median', alpha=1.0)
 
     # Customize
-    plt.title("Dormant Big-Ticket Transactions per Month")
+    plt.title("Dormant Big-Ticket Average Transactions per Month")
     plt.xlabel('Month')
     plt.ylabel('Avg Transactions per User')
     plt.xticks(ticks=range(1, 13), labels=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
