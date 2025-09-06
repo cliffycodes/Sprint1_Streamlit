@@ -33,14 +33,14 @@ df1 = df1.drop_duplicates(subset=['trans_num'])
 st.set_page_config(page_title="My first streamlit project",layout="wide")
 
 # Sidebar with bigger text
-st.sidebar.markdown("<h1 style='font-size:28px;'>Resilient VS Rebound</h1>", unsafe_allow_html=True)
+st.sidebar.markdown("<h1 style='font-size:60px;'>Resilient VS Rebound</h1>", unsafe_allow_html=True)
 
 # Bigger radio buttons
 st.sidebar.markdown(
     """
     <style>
     .sidebar .sidebar-content .stRadio div label {
-        font-size: 20px;
+        font-size: 40px;
     }
     </style>
     """,
