@@ -249,7 +249,7 @@ elif menu == "Resilient Essentials":
     # Category
         # --- Setup ---
     cluster = 0
-    year = 2021  # pick year as int
+    year = st.sidebar.selectbox("Select Year", sorted(df1['YEAR'].unique()))
 
     # Define the ratio columns
     ratio_cols = [
@@ -500,7 +500,7 @@ elif menu == "Rebound Discretionary":
     # Category
     # --- Parameters ---
     cluster = 1
-    year = 2021  # pick year as int
+    year = st.sidebar.selectbox("Select Year", sorted(df1['YEAR'].unique()))
 
     ratio_cols = [
         'entertainment_ratio', 'food_dining_ratio', 'gas_transport_ratio',
@@ -776,7 +776,7 @@ elif menu == "Dormant Big-Ticket":
     st.markdown("## How well do Dormant Big-Ticket customers interact per category")
     # --- Setup ---
     cluster = 2
-    year = 2021  # pick year as int
+    year = st.sidebar.selectbox("Select Year", sorted(df1['YEAR'].unique()))
 
     # Define the ratio columns
     ratio_cols = [
@@ -897,4 +897,3 @@ elif menu == "Dormant Big-Ticket":
 
     plt.show()
     st.pyplot(plt)   # ✅ no plt.show()
-    
