@@ -41,7 +41,6 @@ image_dir = "images"
 plot_dir = "plots"
 
 if menu == "Overview": 
-    df1.head(20)
     st.markdown("# Premise")
     st.markdown("Our project is based on Adobo Bank’s credit card transaction data from 2020 to 2021 — the height of the pandemic. The challenge we set out to solve is simple but important: How can we segment customers into meaningful groups, so the bank can tailor its acquisition, retention, and campaign strategies?")
     
@@ -192,7 +191,7 @@ elif menu == "Resilient Essentials":
     plt.tight_layout()
 
     plt.show()
-
+    st.pyplot(plt)   # ✅ no plt.show()
 
 elif menu == "Rebound Discretionary": 
     st.markdown("#Rebound Discretionary Transaction Profile")
