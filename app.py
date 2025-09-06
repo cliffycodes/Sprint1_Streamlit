@@ -119,6 +119,7 @@ if menu == "Overview":
     st.image(overall_image_path, caption="", use_container_width=True)
 
 elif menu == "Resilient Essentials": 
+    st.markdown("#Resilient Essentials Transaction Profile")
     st.markdown("## When did Resilient Essentials customers last transact?")
 
     recency_ranges = ['(0, 30]', '(30, 60]', '(60, 90]']
@@ -139,6 +140,7 @@ elif menu == "Resilient Essentials":
 
 
 elif menu == "Rebound Discretionary": 
+    st.markdown("#Rebound Discretionary Transaction Profile")
     st.markdown("## When did Rebound Discretionary customers last transact?")
 
     recency_ranges = ['(0, 30]', '(30, 60]']
@@ -159,6 +161,7 @@ elif menu == "Rebound Discretionary":
 
 
 elif menu == "Dormant Big-Ticket": 
+    st.markdown("#Dormant Big-Ticket Transaction Profile")
     st.markdown("## When did Dormant Big-Ticket customers last transact??")
 
     recency_bins = [
