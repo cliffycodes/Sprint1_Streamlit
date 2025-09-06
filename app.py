@@ -30,30 +30,35 @@ df1 = df1.drop_duplicates(subset=['trans_num'])
 
 
 
-st.set_page_config(page_title="My first streamlit project",layout="wide")
+st.set_page_config(page_title="Adobo Bank Customer Segmentation",layout="wide")
 
-# Sidebar with bigger text
-st.sidebar.markdown("<h1 style='font-size:60px;'>Resilient VS Rebound</h1>", unsafe_allow_html=True)
 st.sidebar.markdown(
     """
     <style>
-    /* Make radio button labels bigger */
+    /* Make radio button labels huge */
     .stRadio div label {
-        font-size: 24px;  /* Adjust text size */
-        padding: 10px 0;  /* Add space around each option */
+        font-size: 36px;  /* Big text */
+        padding: 20px 0;  /* Space between options */
+        display: flex;
+        align-items: center;
     }
 
-    /* Make the actual radio circle bigger */
+    /* Make the actual radio circle huge */
     .stRadio div input[type="radio"] {
-        width: 20px;
-        height: 20px;
+        width: 40px;       /* Bigger circle */
+        height: 40px;
+        margin-right: 20px; /* Space between circle and label */
     }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-menu = st.sidebar.radio("", ["Overview", "Resilient Essentials", "Rebound Discretionary", "Dormant Big-Ticket"])
+menu = st.sidebar.radio(
+    "", 
+    ["Overview", "Resilient Essentials", "Rebound Discretionary", "Dormant Big-Ticket"]
+)
+
 
 data_dir = "data"
 image_dir = "images"
