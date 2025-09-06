@@ -123,7 +123,6 @@ if menu == "Overview":
 
 
 elif menu == "Resilient Essentials": 
-    st.dataframe(df1.head(20))
     st.markdown("#Resilient Essentials Transaction Profile")
     st.markdown("## When did Resilient Essentials customers last transact?")
 
@@ -195,7 +194,6 @@ elif menu == "Resilient Essentials":
 
 
 elif menu == "Rebound Discretionary": 
-    st.dataframe(df1.head(20))
     st.markdown("#Rebound Discretionary Transaction Profile")
     st.markdown("## When did Rebound Discretionary customers last transact?")
 
@@ -268,7 +266,6 @@ elif menu == "Rebound Discretionary":
     st.pyplot(plt)   # ✅ no plt.show()
 
 elif menu == "Dormant Big-Ticket": 
-    st.dataframe(df1.head(20))
     st.markdown("#Dormant Big-Ticket Transaction Profile")
     st.markdown("## When did Dormant Big-Ticket customers last transact??")
 
