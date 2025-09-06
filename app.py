@@ -245,16 +245,21 @@ elif menu == "Resilient Essentials":
     st.pyplot(plt)
 
     st.markdown("## How well do Resilient Essentials customers interact per category")
-
-    # Category
-        # --- Setup ---
+    # --- Setup ---
     cluster = 0
+
+    # Ensure YEAR column is integer
+    if 'YEAR' in df1.columns:
+        if pd.api.types.is_period_dtype(df1['YEAR']):
+            df1['YEAR'] = df1['YEAR'].dt.year
+    else:
+        df1['YEAR'] = df1['trans_month_year'].dt.year
+
+    # Select year interactively
     available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
+    year = st.selectbox("Select Year", available_years, index=len(available_years)-1)
 
-    # Select year interactively (in main page, above chart)
-    year = st.selectbox("Select Year", available_years, index=len(available_years)-1)  # default = latest year
-
-    # Define the ratio columns
+    # Define ratio columns
     ratio_cols = [
         'entertainment_ratio', 'food_dining_ratio', 'gas_transport_ratio',
         'grocery_net_ratio', 'grocery_pos_ratio', 'health_fitness_ratio',
@@ -263,60 +268,41 @@ elif menu == "Resilient Essentials":
         'travel_ratio'
     ]
 
-    # --- Ensure YEAR column is integer ---
-    if 'YEAR' in df1.columns:
-        if pd.api.types.is_period_dtype(df1['YEAR']):
-            df1['YEAR'] = df1['YEAR'].dt.year
-    else:
-        # derive from trans_month_year if missing
-        df1['YEAR'] = df1['trans_month_year'].dt.year
-
     # --- Filter for cluster + year ---
     filtered_df = df1.loc[
         (df1['cluster'] == cluster) & (df1['YEAR'] == year),
         ['cluster'] + ratio_cols
     ]
 
-    # --- Aggregate averages ---
-    cluster_avg = filtered_df.groupby(['cluster']).mean().reset_index()
+    if filtered_df.empty:
+        st.warning(f"No data found for cluster {cluster} in year {year}")
+    else:
+        # Aggregate averages
+        cluster_avg = filtered_df.groupby(['cluster']).mean().reset_index()
+        values = cluster_avg[ratio_cols].iloc[0].values
 
-    if cluster_avg.empty:
-        raise ValueError(f"No data found for cluster {cluster} in year {year}")
+        # --- Min-max normalize ---
+        scaled_values = (values - values.min()) / (values.max() - values.min())
 
-    # Extract ratios
-    values = cluster_avg[ratio_cols].iloc[0].values
+        # --- Radar chart setup ---
+        N = len(ratio_cols)
+        scaled_values = np.concatenate((scaled_values, [scaled_values[0]]))  # close the circle
+        angles = np.linspace(0, 2 * np.pi, N, endpoint=False)
+        angles = np.concatenate((angles, [angles[0]]))
 
-    # --- Normalize (min-max scaling within this cluster’s ratios) ---
-    scaled_values = (values - values.min()) / (values.max() - values.min())
+        # --- Plot ---
+        fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
+        ax.plot(angles, scaled_values, color="#603470", linewidth=2)
+        ax.fill(angles, scaled_values, color="#603470", alpha=0.25)
 
-    # --- Radar chart setup ---
-    categories = ratio_cols
-    N = len(categories)
+        ax.set_xticks(angles[:-1])
+        ax.set_xticklabels(ratio_cols, fontsize=10)
+        ax.set_yticks([0.25, 0.5, 0.75, 1.0])
+        ax.set_yticklabels(["Weak", "Moderate", "Strong", "Very Strong"], fontsize=9)
+        ax.set_title(f"Resilient Essentials Category Strength ({year})", size=14, y=1.1)
 
-    # Repeat first value to close the circle
-    scaled_values = np.concatenate((scaled_values, [scaled_values[0]]))
-    angles = np.linspace(0, 2 * np.pi, N, endpoint=False).tolist()
-    angles += angles[:1]
-
-    # --- Plot ---
-    fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
-
-    ax.plot(angles, scaled_values, color="#603470", linewidth=2)
-    ax.fill(angles, scaled_values, color="#603470", alpha=0.25)
-
-    # Add category labels
-    ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(categories, fontsize=10)
-
-    # Radial scale labels
-    ax.set_yticks([0.25, 0.5, 0.75, 1.0])
-    ax.set_yticklabels(["Weak", "Moderate", "Strong", "Very Strong"], fontsize=9)
-
-    # Title
-    ax.set_title(f"Resilient Essentials Category Strength ({year}", size=14, y=1.1)
-
-    plt.show()
-    st.pyplot(plt)
+        # Streamlit render
+        st.pyplot(fig)
 
     # Category YoY
     ### Category Strength
