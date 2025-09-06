@@ -118,6 +118,27 @@ if menu == "Overview":
     overall_image_path = os.path.join(image_dir, "personas.png")
     st.image(overall_image_path, caption="", use_container_width=True)
 
+elif menu == "Resilient Essentials": 
+    recency_ranges = ['(0, 30]', '(30, 60]', '(60, 90]']
+    number_of_accounts = [40, 0, 6]
+
+    plt.figure(figsize=(10, 5))
+    # Plotting the bar graph
+    plt.bar(recency_ranges, number_of_accounts, color='#603470', edgecolor='black')
+
+    # Adding title and labels
+    plt.title('Resilient Essentials Transaction Recency Distribution')
+    plt.xlabel('Recency Range (days)')
+    plt.ylabel('Number of Accounts')
+
+    # Displaying values on top of bars
+    for i in range(len(recency_ranges)):
+        plt.text(i, number_of_accounts[i] + 0.5, str(number_of_accounts[i]), ha='center')
+
+    # Show plot
+    plt.tight_layout()
+    plt.show()
+    st.plotly_chart(plt)
 
 
 
