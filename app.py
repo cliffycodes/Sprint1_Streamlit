@@ -123,7 +123,7 @@ if menu == "Overview":
 
 
 elif menu == "Resilient Essentials": 
-    st.markdown("# Resilient Essentials Transaction Profile")
+    st.markdown("# Resilient Essentials Transactions Profile")
     st.markdown("## When did Resilient Essentials customers last transact?")
 
     recency_ranges = ['(0, 30]', '(30, 60]', '(60, 90]']
@@ -369,11 +369,11 @@ elif menu == "Resilient Essentials":
     plt.tight_layout()
 
     plt.show()
-
+    st.pyplot(plt)   # ✅ no plt.show()
 
 
 elif menu == "Rebound Discretionary": 
-    st.markdown("# Rebound Discretionary Transaction Profile")
+    st.markdown("# Rebound Discretionary Transactions Profile")
     st.markdown("## When did Rebound Discretionary customers last transact?")
 
     recency_ranges = ['(0, 30]', '(30, 60]']
@@ -640,10 +640,9 @@ elif menu == "Rebound Discretionary":
     plt.tight_layout()
 
     plt.show()
-
-
+    st.pyplot(plt)   # ✅ no plt.show()
 elif menu == "Dormant Big-Ticket": 
-    st.markdown("# Dormant Big-Ticket Transaction Profile")
+    st.markdown("# Dormant Big-Ticket Transactions Profile")
     st.markdown("## When did Dormant Big-Ticket customers last transact??")
 
     recency_bins = [
@@ -897,3 +896,5 @@ elif menu == "Dormant Big-Ticket":
     plt.tight_layout()
 
     plt.show()
+    st.pyplot(plt)   # ✅ no plt.show()
+    
