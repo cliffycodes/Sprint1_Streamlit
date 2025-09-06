@@ -249,7 +249,10 @@ elif menu == "Resilient Essentials":
     # Category
         # --- Setup ---
     cluster = 0
-    year = 2021  # pick year as int
+    available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
+
+    # Select year interactively (in main page, above chart)
+    year = st.selectbox("Select Year", available_years, index=len(available_years)-1)  # default = latest year
 
     # Define the ratio columns
     ratio_cols = [
@@ -500,7 +503,10 @@ elif menu == "Rebound Discretionary":
     # Category
     # --- Parameters ---
     cluster = 1
-    year = 2021  # pick year as int
+    available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
+
+    # Select year interactively (in main page, above chart)
+    year = st.selectbox("Select Year", available_years, index=len(available_years)-1)  # default = latest year
 
     ratio_cols = [
         'entertainment_ratio', 'food_dining_ratio', 'gas_transport_ratio',
