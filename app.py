@@ -138,7 +138,7 @@ elif menu == "Resilient Essentials":
     # Show plot
     plt.tight_layout()
     plt.show()
-    st.plotly_chart(plt)
+    # ✅ Correct for Matplotlib
 
 
 
