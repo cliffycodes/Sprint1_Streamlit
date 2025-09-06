@@ -789,8 +789,8 @@ elif menu == "Dormant Big-Ticket":
     # Only show years that exist for this cluster
     available_years = sorted(df1.loc[df1['cluster'] == cluster, 'YEAR'].unique())
 
-    # Select year interactively
-    year = st.sidebar.selectbox("Select Year", available_years, index=len(available_years)-1)  # default = latest year
+    # Select year interactively (in main page, above chart)
+    year = st.selectbox("Select Year", available_years, index=len(available_years)-1)  # default = latest year
 
     # Define the ratio columns
     ratio_cols = [
@@ -846,7 +846,7 @@ elif menu == "Dormant Big-Ticket":
         ax.set_title(f"Dormant Big-Ticket Category Strength ({year})", size=14, y=1.1)
 
         st.pyplot(fig)
-    
+        
 
 
     st.markdown("## How much do Dormant Big-Ticket customers spend per category monthly?")
