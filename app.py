@@ -572,7 +572,8 @@ elif menu == "Rebound Discretionary":
     ### Category Strength
 
     # Filter by category
-    category = 'food_dining' # Change this to check all categories
+    categories = sorted(df1['category'].unique())
+    category = st.selectbox("Select Category", categories)  # interactive category selection
     cluster = 1
 
 
@@ -834,7 +835,8 @@ elif menu == "Dormant Big-Ticket":
     ### Category Strength
 
     # Filter by category
-    category = 'food_dining' # Change this to check all categories
+    categories = sorted(df1['category'].unique())
+    category = st.selectbox("Select Category", categories)  # interactive category selection
     cluster = 0
 
 
