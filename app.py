@@ -119,66 +119,48 @@ if menu == "Overview":
     st.image(overall_image_path, caption="", use_container_width=True)
 
 elif menu == "Resilient Essentials": 
-    # Recency Days plot
-    st.markdown("#How active are the customers in terms of RECENCY?")
-
-    # Add title above
+    st.markdown("## How active are the customers in terms of RECENCY?")
 
     recency_ranges = ['(0, 30]', '(30, 60]', '(60, 90]']
     number_of_accounts = [40, 0, 6]
 
     plt.figure(figsize=(10, 5))
-    # Plotting the bar graph
     plt.bar(recency_ranges, number_of_accounts, color='#603470', edgecolor='black')
 
-    # Adding title and labels
     plt.title('Resilient Essentials Transaction Recency Distribution')
     plt.xlabel('Recency Range (days)')
     plt.ylabel('Number of Accounts')
 
-    # Displaying values on top of bars
-    for i in range(len(recency_ranges)):
-        plt.text(i, number_of_accounts[i] + 0.5, str(number_of_accounts[i]), ha='center')
+    for i, val in enumerate(number_of_accounts):
+        plt.text(i, val + 0.5, str(val), ha='center')
 
-    # Show plot
     plt.tight_layout()
-    plt.show()
-    # ✅ Correct for Matplotlib
-    st.pyplot(plt)
+    st.pyplot(plt)   # ✅ no plt.show()
+
 
 elif menu == "Rebound Discretionary": 
-    # Recency Days plot
-    st.markdown("#How active are the customers in terms of RECENCY?")
+    st.markdown("## How active are the customers in terms of RECENCY?")
 
-    # Add title above
-    # Updated distribution for 26 accounts
     recency_ranges = ['(0, 30]', '(30, 60]']
-    number_of_accounts = [24, 2]  # Small number in (30, 60] range
+    number_of_accounts = [24, 2]
 
-    # Plotting the bar graph
+    plt.figure(figsize=(10, 5))
     plt.bar(recency_ranges, number_of_accounts, color='#d25784', edgecolor='black')
 
-    # Adding title and labels
     plt.title('Rebound Discretionary Transaction Recency Distribution')
     plt.xlabel('Recency Range (days)')
     plt.ylabel('Number of Accounts')
 
-    # Displaying values on top of bars
-    for i in range(len(recency_ranges)):
-        plt.text(i, number_of_accounts[i] + 0.5, str(number_of_accounts[i]), ha='center')
+    for i, val in enumerate(number_of_accounts):
+        plt.text(i, val + 0.5, str(val), ha='center')
 
-    # Show plot
     plt.tight_layout()
-    plt.show()
-    # ✅ Correct for Matplotlib
-    st.pyplot(plt)
-elif menu == "Dormant Big-Ticket": 
-    # Recency Days plot
-    st.markdown("#How active are the customers in terms of RECENCY?")
+    st.pyplot(plt)   # ✅ no plt.show()
 
-    # Add title above
-    
-    # Define the recency bins
+
+elif menu == "Dormant Big-Ticket": 
+    st.markdown("## How active are the customers in terms of RECENCY?")
+
     recency_bins = [
         '(110, 140]', '(140, 170]', '(170, 200]', '(200, 230]', '(230, 260]',
         '(260, 290]', '(290, 320]', '(320, 350]', '(350, 380]', '(380, 410]',
@@ -186,32 +168,21 @@ elif menu == "Dormant Big-Ticket":
         '(560, 590]', '(590, 620]'
     ]
 
-    # Distribution totaling 22 accounts
-    account_counts = [
-        2, 2, 2, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0
-    ]
+    account_counts = [2, 2, 2, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0]
 
-    # Plotting
     plt.figure(figsize=(12, 6))
     plt.bar(recency_bins, account_counts, color='#e6a752', edgecolor='black')
     plt.xticks(rotation=45, ha='right')
-    plt.title('Dormant Big-Ticket Transaction Recency Distribution)')
+
+    plt.title('Dormant Big-Ticket Transaction Recency Distribution')
     plt.xlabel('Recency Range (days)')
     plt.ylabel('Number of Accounts')
 
-    # Annotate bars
-    for i, count in enumerate(account_counts):
-        if count > 0:
-            plt.text(i, count + 0.2, str(count), ha='center')
+    for i, val in enumerate(account_counts):
+        if val > 0:
+            plt.text(i, val + 0.2, str(val), ha='center')
 
     plt.tight_layout()
-    plt.show()
-    # ✅ Correct for Matplotlib
-    st.pyplot(plt)
-
-
-
-
-
-
-
+    st.pyplot(plt)   # ✅ no plt.show()
+    
+    st.pyplot(plt)   # ✅ no plt.show()
