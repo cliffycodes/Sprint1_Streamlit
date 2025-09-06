@@ -313,7 +313,7 @@ elif menu == "Resilient Essentials":
     ax.set_yticklabels(["Weak", "Moderate", "Strong", "Very Strong"], fontsize=9)
 
     # Title
-    ax.set_title(f"Resilient Essentials Category Strength", size=14, y=1.1)
+    ax.set_title(f"Resilient Essentials Category Strength ({year}", size=14, y=1.1)
 
     plt.show()
     st.pyplot(plt)
@@ -588,7 +588,7 @@ elif menu == "Rebound Discretionary":
     ax.set_yticklabels(["Weak", "Moderate", "Strong", "Very Strong"], fontsize=9)
 
     # Title
-    ax.set_title(f"Rebound Discretionary Category Strength", size=14, y=1.1)
+    ax.set_title(f"Rebound Discretionary Category Strength ({year}", size=14, y=1.1)
 
     plt.show()
     st.pyplot(plt) 
