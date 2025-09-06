@@ -30,25 +30,30 @@ df1 = df1.drop_duplicates(subset=['trans_num'])
 
 
 
-st.set_page_config(page_title="Adobo Bank Customer Segmentation",layout="wide")
+st.set_page_config(page_title="Adobo Bank Customer",layout="wide")
 
+# Sidebar with bigger text
 st.sidebar.markdown("<h1 style='font-size:60px;'>Resilient VS Rebound</h1>", unsafe_allow_html=True)
+st.sidebar.markdown(
+    """
+    <style>
+    /* Make radio button labels bigger */
+    .stRadio div label {
+        font-size: 24px;  /* Adjust text size */
+        padding: 10px 0;  /* Add space around each option */
+    }
 
-menu = ["Overview", "Resilient Essentials", "Rebound Discretionary", "Dormant Big-Ticket"]
+    /* Make the actual radio circle bigger */
+    .stRadio div input[type="radio"] {
+        width: 20px;
+        height: 20px;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-st.sidebar.markdown("<h2 style='font-size:36px'>Navigation</h2>", unsafe_allow_html=True)
-
-# Create big buttons instead of radio
-for option in menu:
-    if st.sidebar.button(option, key=option):
-        st.session_state['menu'] = option
-
-# Initialize menu if not set
-if 'menu' not in st.session_state:
-    st.session_state['menu'] = menu[0]
-
-st.write("Selected:", st.session_state['menu'])
-
+menu = st.sidebar.radio("", ["Overview", "Resilient Essentials", "Rebound Discretionary", "Dormant Big-Ticket"])
 
 data_dir = "data"
 image_dir = "images"
