@@ -10,11 +10,12 @@ df = pd.read_csv(rf"data/cc_clean.csv")
 final_account_labels = pd.read_csv(rf"data/final_acct_table.csv")
 
 # Figure out which columns to bring from final_account_labels
-# Always keep acct_num2 (join key)
-cols_to_add = [c for c in final_account_labels.columns if c not in df.columns or c == "acct_num2"]
+# Always include acct_num2 and cluster when merging
+cols_to_add = ["acct_num2", "cluster"] + [c for c in final_account_labels.columns if c not in df.columns]
 
 # Merge cleanly
 df1 = df.merge(final_account_labels[cols_to_add], on="acct_num2", how="left")
+
 
 
 # Convert and add columns
@@ -296,6 +297,7 @@ elif menu == "Dormant Big-Ticket":
     st.pyplot(plt)   # ✅ no plt.show()
 
     st.markdown("## How often do Dormant Big-Ticket customers transact?")
+
     # Cluster = 2
     cluster = 2
     aggregate= df1[['trans_month_year','trans_num','acct_num2']][df1['cluster']==cluster].groupby(['trans_month_year','acct_num2']).count().reset_index()
