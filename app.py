@@ -185,4 +185,5 @@ elif menu == "Dormant Big-Ticket":
     plt.tight_layout()
     st.pyplot(plt)   # ✅ no plt.show()
     
-    st.pyplot(plt)   # ✅ no plt.show()
+
+
