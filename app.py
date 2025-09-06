@@ -83,7 +83,7 @@ if menu == "Overview":
 
     st.markdown("# Final Table")
     st.markdown("Final features attached to each accountnumber to be used in clustering")
-    st.dataframe(df1.head(20))
+    st.dataframe(final_account_labels.head(20))
 
         # Download button for merged dataset
     csv2 = df1.to_csv(index=False).encode('utf-8')
