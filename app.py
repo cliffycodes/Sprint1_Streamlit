@@ -249,7 +249,13 @@ elif menu == "Resilient Essentials":
     # Category
         # --- Setup ---
     cluster = 0
-    year = st.sidebar.selectbox("Select Year", sorted(df1['YEAR'].unique()))
+    # Sidebar selectors
+    cluster = st.sidebar.selectbox("Select Cluster", sorted(df1['cluster'].unique()))
+
+    # Only show years that exist for this cluster
+    available_years = sorted(df1.loc[df1['cluster']==cluster, 'YEAR'].unique())
+    year = st.sidebar.selectbox("Select Year", available_years)
+
 
     # Define the ratio columns
     ratio_cols = [
