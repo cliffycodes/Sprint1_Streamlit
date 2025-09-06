@@ -34,13 +34,19 @@ st.set_page_config(page_title="My first streamlit project",layout="wide")
 
 # Sidebar with bigger text
 st.sidebar.markdown("<h1 style='font-size:60px;'>Resilient VS Rebound</h1>", unsafe_allow_html=True)
-
-# Bigger radio buttons
 st.sidebar.markdown(
     """
     <style>
-    .sidebar .sidebar-content .stRadio div label {
-        font-size: 40px;
+    /* Make radio button labels bigger */
+    .stRadio div label {
+        font-size: 24px;  /* Adjust text size */
+        padding: 10px 0;  /* Add space around each option */
+    }
+
+    /* Make the actual radio circle bigger */
+    .stRadio div input[type="radio"] {
+        width: 20px;
+        height: 20px;
     }
     </style>
     """,
